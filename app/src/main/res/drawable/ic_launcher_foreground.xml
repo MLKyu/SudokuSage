@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Gold "insight" cell, drawn first so grid lines render on top -->
+    <path
+        android:pathData="M45,45h18v18h-18z"
+        android:fillColor="#FFF5C242" />
+    <!-- Outer frame -->
+    <path
+        android:pathData="M27,27h54v54h-54z"
+        android:strokeColor="#FFFAF8FF"
+        android:strokeWidth="3.5"
+        android:fillColor="#00000000" />
+    <!-- Inner grid lines (3x3) -->
+    <path
+        android:pathData="M45,27L45,81 M63,27L63,81 M27,45L81,45 M27,63L81,63"
+        android:strokeColor="#FFFAF8FF"
+        android:strokeWidth="2"
+        android:fillColor="#00000000" />
+</vector>

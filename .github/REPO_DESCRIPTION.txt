@@ -1,0 +1,11 @@
+SudokuSage — an Android Sudoku app: 5 variants, 6 difficulties, daily challenge with streaks, technique-based progressive hints, technique trainer, replay, today's-puzzle home widget, 5 theme palettes, and accessibility support. Kotlin + Compose + Koin, multi-module (:app / :core:data / :core:domain).
+
+# Suggested GitHub repo settings
+# - Description (one line, ≤ 350 chars):
+"Android Sudoku app — Classic/Mini/X/Hyper variants, daily challenge, learning hints, replay, home widget. Kotlin + Compose + Koin, multi-module."
+
+# - Topics (comma-separated):
+android, kotlin, jetpack-compose, sudoku, koin, room, mvvm, multi-module, material3, daily-challenge, app-widget
+
+# - Website (optional):
+(leave blank or link to a portfolio entry)
