@@ -38,6 +38,11 @@ android {
     }
 }
 
+val appName = "SudokuSage"
+base {
+    archivesName.set("$appName-v${android.defaultConfig.versionName}")
+}
+
 dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
