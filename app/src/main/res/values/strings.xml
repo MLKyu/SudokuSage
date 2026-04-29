@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SudokuSage</string>
+    <string name="app_tagline">현자의 한 수</string>
+
+    <!-- Difficulties -->
+    <string name="difficulty_easy">쉬움</string>
+    <string name="difficulty_medium">보통</string>
+    <string name="difficulty_hard">어려움</string>
+    <string name="difficulty_expert">전문가</string>
+    <string name="difficulty_master">마스터</string>
+    <string name="difficulty_extreme">익스트림</string>
+
+    <!-- Common actions -->
+    <string name="action_new_game">새 게임</string>
+    <string name="action_continue">이어서</string>
+    <string name="action_daily">일일 챌린지</string>
+    <string name="action_stats">통계</string>
+    <string name="action_settings">설정</string>
+    <string name="action_undo">실행 취소</string>
+    <string name="action_redo">다시 실행</string>
+    <string name="action_erase">지우기</string>
+    <string name="action_note">노트</string>
+    <string name="action_hint">힌트</string>
+
+    <!-- Today's puzzle widget -->
+    <string name="widget_title">오늘의 퍼즐</string>
+    <string name="widget_description">오늘의 일일 챌린지 상태를 빠르게 확인합니다.</string>
+    <string name="widget_status_won">완료 ✓</string>
+    <string name="widget_status_failed">실패</string>
+    <string name="widget_status_not_played">아직 안 함</string>
+    <string name="widget_streak_format">연속 %d일</string>
+</resources>

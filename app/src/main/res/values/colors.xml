@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sage brand tokens for non-Compose surfaces (splash, notifications, widgets) -->
+    <color name="sage_indigo_900">#FF14112C</color>
+    <color name="sage_indigo_700">#FF2A2547</color>
+    <color name="sage_indigo_500">#FF4F4581</color>
+    <color name="sage_indigo_300">#FFC5BAF0</color>
+    <color name="sage_indigo_100">#FFE5DEFF</color>
+    <color name="sage_amber_500">#FFF5C242</color>
+    <color name="sage_amber_300">#FFFFE0A1</color>
+    <color name="sage_mist">#FFFAF8FF</color>
+    <color name="sage_ink">#FF1B1B25</color>
+
+    <color name="splash_background">@color/sage_indigo_900</color>
+    <color name="splash_icon_tint">@color/sage_amber_500</color>
+</resources>

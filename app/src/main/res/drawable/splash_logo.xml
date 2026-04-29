@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="288"
+    android:viewportHeight="288">
+    <!-- Gold insight cell -->
+    <path
+        android:pathData="M122,122h44v44h-44z"
+        android:fillColor="#FFF5C242" />
+    <!-- Outer frame -->
+    <path
+        android:pathData="M78,78h132v132h-132z"
+        android:strokeColor="#FFFAF8FF"
+        android:strokeWidth="6"
+        android:fillColor="#00000000" />
+    <!-- Inner grid lines -->
+    <path
+        android:pathData="M122,78L122,210 M166,78L166,210 M78,122L210,122 M78,166L210,166"
+        android:strokeColor="#FFFAF8FF"
+        android:strokeWidth="4"
+        android:fillColor="#00000000" />
+</vector>
