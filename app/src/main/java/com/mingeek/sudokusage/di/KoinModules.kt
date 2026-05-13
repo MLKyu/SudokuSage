@@ -1,8 +1,17 @@
 package com.mingeek.sudokusage.di
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.PersistentCacheSettings
+import com.google.firebase.perf.FirebasePerformance
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.mingeek.sudokusage.analytics.Analytics
+import com.mingeek.sudokusage.analytics.AnalyticsCollector
 import com.mingeek.sudokusage.analytics.FirebaseAnalyticsAdapter
 import com.mingeek.sudokusage.audio.AudioController
+import com.mingeek.sudokusage.auth.AuthSession
+import com.mingeek.sudokusage.auth.FirebaseAuthSession
 import com.mingeek.sudokusage.audio.AudioSettings
 import com.mingeek.sudokusage.data.achievement.AchievementCollector
 import com.mingeek.sudokusage.data.db.SudokuDatabase
@@ -22,7 +31,9 @@ import com.mingeek.sudokusage.domain.event.DefaultGameEventBus
 import com.mingeek.sudokusage.domain.event.GameEventBus
 import com.mingeek.sudokusage.domain.hint.HintEngine
 import com.mingeek.sudokusage.featureflags.FeatureFlags
-import com.mingeek.sudokusage.featureflags.LocalFeatureFlags
+import com.mingeek.sudokusage.featureflags.RemoteConfigFeatureFlags
+import com.mingeek.sudokusage.performance.FirebasePerformanceTracker
+import com.mingeek.sudokusage.performance.PerformanceTracker
 import com.mingeek.sudokusage.feedback.Feedback
 import com.mingeek.sudokusage.feedback.HapticController
 import com.mingeek.sudokusage.game.GameViewModel
@@ -34,7 +45,8 @@ import com.mingeek.sudokusage.monetization.NoOpAdProvider
 import com.mingeek.sudokusage.monetization.NoOpEntitlementGate
 import com.mingeek.sudokusage.monetization.NoOpIapProvider
 import com.mingeek.sudokusage.platform.sync.CloudSyncProvider
-import com.mingeek.sudokusage.platform.sync.NoOpCloudSyncProvider
+import com.mingeek.sudokusage.platform.sync.FirestoreCloudSyncProvider
+import com.mingeek.sudokusage.platform.sync.SyncCollector
 import com.mingeek.sudokusage.ui.screens.achievements.AchievementsViewModel
 import com.mingeek.sudokusage.ui.screens.daily.DailyViewModel
 import com.mingeek.sudokusage.ui.screens.home.HomeViewModel
@@ -66,11 +78,26 @@ private val appModule = module {
     single<CoroutineScope>(DiQualifiers.ApplicationScope) {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
-    single<FeatureFlags> { LocalFeatureFlags() }
     single<Analytics> { FirebaseAnalyticsAdapter(androidContext()) }
     single<MutableStateFlow<GameState?>>(DiQualifiers.LastFinishedGame) {
         MutableStateFlow(null)
     }
+}
+
+private val firebaseModule = module {
+    single { FirebaseAuth.getInstance() }
+    single {
+        FirebaseFirestore.getInstance().apply {
+            firestoreSettings = FirebaseFirestoreSettings.Builder()
+                .setLocalCacheSettings(PersistentCacheSettings.newBuilder().build())
+                .build()
+        }
+    }
+    single { FirebaseRemoteConfig.getInstance() }
+    single { FirebasePerformance.getInstance() }
+    single<AuthSession> { FirebaseAuthSession(get()) }
+    single<FeatureFlags> { RemoteConfigFeatureFlags(get()) }
+    single<PerformanceTracker> { FirebasePerformanceTracker(get()) }
 }
 
 private val persistenceModule = module {
@@ -121,7 +148,15 @@ private val monetizationModule = module {
     single<EntitlementGate> { NoOpEntitlementGate() }
     single<AdProvider> { NoOpAdProvider() }
     single<IapProvider> { NoOpIapProvider() }
-    single<CloudSyncProvider> { NoOpCloudSyncProvider() }
+    single<CloudSyncProvider> {
+        FirestoreCloudSyncProvider(
+            firestore = get(),
+            authSession = get(),
+            statsDao = get(),
+            achievementDao = get(),
+            dailyDao = get(),
+        )
+    }
 }
 
 private val collectorsModule = module {
@@ -136,6 +171,22 @@ private val collectorsModule = module {
         AchievementCollector(
             eventBus = get(),
             repo = get(),
+            scope = get(DiQualifiers.ApplicationScope),
+        )
+    }
+    single {
+        AnalyticsCollector(
+            eventBus = get(),
+            analytics = get(),
+            scope = get(DiQualifiers.ApplicationScope),
+        )
+    }
+    single {
+        SyncCollector(
+            eventBus = get(),
+            cloudSync = get(),
+            featureFlags = get(),
+            statsDao = get(),
             scope = get(DiQualifiers.ApplicationScope),
         )
     }
@@ -176,6 +227,7 @@ private val viewModelModule = module {
 
 val sudokuSageModules = listOf(
     appModule,
+    firebaseModule,
     persistenceModule,
     audioFeedbackModule,
     domainModule,

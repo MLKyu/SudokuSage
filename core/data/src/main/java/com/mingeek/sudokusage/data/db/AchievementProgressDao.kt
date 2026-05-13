@@ -17,4 +17,7 @@ interface AchievementProgressDao {
 
     @Query("SELECT * FROM achievement_progress")
     fun observeAll(): Flow<List<AchievementProgressEntity>>
+
+    @Query("SELECT * FROM achievement_progress")
+    suspend fun getAll(): List<AchievementProgressEntity>
 }

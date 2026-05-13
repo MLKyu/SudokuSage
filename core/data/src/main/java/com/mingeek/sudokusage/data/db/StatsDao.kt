@@ -18,6 +18,9 @@ interface StatsDao {
     @Query("SELECT * FROM puzzle_stats")
     fun observeAll(): Flow<List<StatsEntity>>
 
+    @Query("SELECT * FROM puzzle_stats")
+    suspend fun getAll(): List<StatsEntity>
+
     @Query("SELECT * FROM puzzle_stats WHERE variant = :variant ORDER BY difficulty")
     fun observeForVariant(variant: String): Flow<List<StatsEntity>>
 }
