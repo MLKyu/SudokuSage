@@ -13,6 +13,9 @@ interface FeatureFlags {
     fun bool(key: FlagKey, default: Boolean = false): Boolean
     fun string(key: FlagKey, default: String = ""): String
     fun int(key: FlagKey, default: Int = 0): Int
+
+    /** Force a fresh fetch from the backing store. NoOp impls return true. */
+    suspend fun refresh(): Boolean = true
 }
 
 object FlagKeys {

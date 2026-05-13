@@ -23,4 +23,7 @@ interface DailyCompletionDao {
 
     @Query("SELECT * FROM daily_completions ORDER BY dateKey")
     suspend fun getAll(): List<DailyCompletionEntity>
+
+    @Query("SELECT * FROM daily_completions ORDER BY completedAt DESC LIMIT 1")
+    suspend fun getMostRecent(): DailyCompletionEntity?
 }
