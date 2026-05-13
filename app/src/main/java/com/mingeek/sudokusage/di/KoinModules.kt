@@ -1,7 +1,7 @@
 package com.mingeek.sudokusage.di
 
 import com.mingeek.sudokusage.analytics.Analytics
-import com.mingeek.sudokusage.analytics.NoOpAnalytics
+import com.mingeek.sudokusage.analytics.FirebaseAnalyticsAdapter
 import com.mingeek.sudokusage.audio.AudioController
 import com.mingeek.sudokusage.audio.AudioSettings
 import com.mingeek.sudokusage.data.achievement.AchievementCollector
@@ -67,7 +67,7 @@ private val appModule = module {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
     single<FeatureFlags> { LocalFeatureFlags() }
-    single<Analytics> { NoOpAnalytics() }
+    single<Analytics> { FirebaseAnalyticsAdapter(androidContext()) }
     single<MutableStateFlow<GameState?>>(DiQualifiers.LastFinishedGame) {
         MutableStateFlow(null)
     }

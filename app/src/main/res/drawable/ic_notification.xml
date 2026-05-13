@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Status bar notification icon — alpha-only silhouette so the system can tint it.
+  Same 3x3 grid motif as the launcher icon, simplified for 24dp readability.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Filled center cell -->
+    <path
+        android:pathData="M10,10h4v4h-4z"
+        android:fillColor="#FFFFFFFF" />
+    <!-- Outer frame -->
+    <path
+        android:pathData="M4,4h16v16h-16z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.6"
+        android:fillColor="#00000000" />
+    <!-- Inner grid lines (3x3 split) -->
+    <path
+        android:pathData="M10,4L10,20 M14,4L14,20 M4,10L20,10 M4,14L20,14"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000" />
+</vector>

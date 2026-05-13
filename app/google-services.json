@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "860049132230",
+    "project_id": "sudokusage-36191",
+    "storage_bucket": "sudokusage-36191.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860049132230:android:de24db4322860d16fe65c7",
+        "android_client_info": {
+          "package_name": "com.mingeek.sudokusage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnkSJ71icO0c25GMQNLVYHymP6_3G_mis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

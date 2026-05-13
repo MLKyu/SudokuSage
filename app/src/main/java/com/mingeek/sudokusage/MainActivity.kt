@@ -1,15 +1,19 @@
 package com.mingeek.sudokusage
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mingeek.sudokusage.audio.AudioController
@@ -26,10 +30,17 @@ class MainActivity : ComponentActivity() {
     private val audio: AudioController by inject()
     private val gameplaySettings: GameplaySettings by inject()
 
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* outcome ignored — app works regardless */ }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Only on a fresh process start, not on every config-change recreation —
+        // POST_NOTIFICATIONS only allows two visible prompts before becoming
+        // permanent-deny, and a couple of rotations would burn both.
+        if (savedInstanceState == null) maybeRequestNotificationPermission()
 
         setContent {
             val prefs by gameplaySettings.state
@@ -64,5 +75,13 @@ class MainActivity : ComponentActivity() {
     override fun onStop() {
         audio.onAppStop()
         super.onStop()
+    }
+
+    private fun maybeRequestNotificationPermission() {
+        val granted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+        if (!granted) requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 }
