@@ -1,10 +1,13 @@
 package com.mingeek.sudokusage.messaging
 
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mingeek.sudokusage.MainActivity
@@ -53,6 +56,12 @@ class SudokuMessagingService : FirebaseMessagingService() {
             .setContentIntent(pending)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
+        // minSdk 33: POST_NOTIFICATIONS is a runtime permission on every supported device.
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
         val manager = NotificationManagerCompat.from(this)
         if (!manager.areNotificationsEnabled()) return
         manager.notify(NEXT_ID.incrementAndGet(), builder.build())
