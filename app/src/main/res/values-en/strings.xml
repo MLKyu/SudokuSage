@@ -26,4 +26,7 @@
     <string name="widget_status_failed">Failed</string>
     <string name="widget_status_not_played">Not played</string>
     <string name="widget_streak_format">%d-day streak</string>
+
+    <string name="notif_channel_default_name">News &amp; Alerts</string>
+    <string name="notif_channel_default_description">Daily challenge reminders, event news, and other app-wide alerts.</string>
 </resources>
