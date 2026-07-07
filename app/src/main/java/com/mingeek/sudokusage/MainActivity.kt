@@ -2,6 +2,7 @@ package com.mingeek.sudokusage
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -78,6 +79,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun maybeRequestNotificationPermission() {
+        // POST_NOTIFICATIONS only exists on API 33+; older devices need no permission.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
         val granted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.POST_NOTIFICATIONS,
